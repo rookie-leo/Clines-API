@@ -14,38 +14,48 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "locations")
 public class Location {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private Country country;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private Country country;
 
-    @NotNull
-    private String state;
+	@NotNull
+	private String state;
 
-    @NotNull
-    private String city;
+	@NotNull
+	private String city;
 
-    public Location(Country country, String state, String city) {
-        this.country = country;
-        this.state = state;
-        this.city = city;
-    }
+	public Location(Country country, String state, String city) {
+		this.country = country;
+		this.state = state;
+		this.city = city;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Location location = (Location) o;
-        return id.equals(location.id);
-    }
+	public Location(Long id, @NotNull Country country, @NotNull String state, @NotNull String city) {
+		super();
+		this.id = id;
+		this.country = country;
+		this.state = state;
+		this.city = city;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Location location = (Location) o;
+		return id.equals(location.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
 	public Long getId() {
 		return id;

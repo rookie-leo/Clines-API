@@ -12,32 +12,43 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "promotional_codes")
 public class PromotionalCode {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotNull
-    private String code;
+	@NotNull
+	private String code;
 
-    @NotNull
-    private LocalDate startDate;
+	@NotNull
+	private LocalDate startDate;
 
-    @NotNull
-    private LocalDate expirationDate;
+	@NotNull
+	private LocalDate expirationDate;
 
-    @NotNull
-    private String description;
+	@NotNull
+	private String description;
 
-    @NotNull
-    private Integer discount;
+	@NotNull
+	private Integer discount;
 
-    public PromotionalCode(String code, LocalDate startDate, LocalDate expirationDate, String description, int discount) {
-        this.code = code;
-        this.startDate = startDate;
-        this.expirationDate = expirationDate;
-        this.description = description;
-        this.discount = discount;
-    }
+	public PromotionalCode(String code, LocalDate startDate, LocalDate expirationDate, String description,
+			int discount) {
+		this.code = code;
+		this.startDate = startDate;
+		this.expirationDate = expirationDate;
+		this.description = description;
+		this.discount = discount;
+	}
+
+	public PromotionalCode(Long id, @NotNull String code, @NotNull LocalDate startDate,
+			@NotNull LocalDate expirationDate, @NotNull String description, @NotNull Integer discount) {
+		this.id = id;
+		this.code = code;
+		this.startDate = startDate;
+		this.expirationDate = expirationDate;
+		this.description = description;
+		this.discount = discount;
+	}
 
 	public Long getId() {
 		return id;
@@ -63,5 +74,4 @@ public class PromotionalCode {
 		return discount;
 	}
 
-	
 }

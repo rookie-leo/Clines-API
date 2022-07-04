@@ -24,6 +24,8 @@ public class Aircraft {
     @JoinColumn(name = "model_id")
     private AircraftModel model;
 
+    public Aircraft() {}
+    
     public Aircraft(String code, AircraftModel model) {
         this.code = code;
         this.model = model;

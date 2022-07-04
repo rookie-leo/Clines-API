@@ -24,6 +24,8 @@ public class Airport {
 	@JoinColumn(name = "location_id")
 	private Location location;
 
+	public Airport() {}
+
 	public Airport(String code, Location location) {
 		this.code = code;
 		this.location = location;

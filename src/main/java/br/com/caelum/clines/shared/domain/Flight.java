@@ -46,6 +46,15 @@ public class Flight {
 		this.aircraft = aircraft;
 	}
 
+	public Flight(Long id, @NotNull BigDecimal price, @NotNull Waypoint departure, @NotNull Waypoint arrival,
+			@NotNull Aircraft aircraft) {
+		this.id = id;
+		this.price = price;
+		this.departure = departure;
+		this.arrival = arrival;
+		this.aircraft = aircraft;
+	}
+
 	public Duration getDuration() {
 		return Duration.between(departure.getTime(), arrival.getTime());
 	}
