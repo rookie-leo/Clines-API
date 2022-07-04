@@ -1,24 +1,30 @@
 package br.com.caelum.clines.api.promotionalcodes;
 
-import br.com.caelum.clines.shared.exceptions.ResourceAlreadyExistsException;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.caelum.clines.shared.exceptions.ResourceAlreadyExistsException;
+
 @Service
-@AllArgsConstructor
 public class PromotionalCodeService {
-    private final PromotionalCodeRepository repository;
-    private final PromotionalCodeFormMapper formMapper;
+	private final PromotionalCodeRepository repository;
+	private final PromotionalCodeFormMapper formMapper;
 
-    public String createPromotionalCodeBy(PromotionalCodeForm form) {
-        repository.findByCode(form.getCode()).ifPresent(entity -> {
-            throw new ResourceAlreadyExistsException("Promotional code already exists");
-        });
+	@Autowired
+	public PromotionalCodeService(PromotionalCodeRepository repository, PromotionalCodeFormMapper formMapper) {
+		this.repository = repository;
+		this.formMapper = formMapper;
+	}
 
-        var promotionalCode = formMapper.map(form);
+	public String createPromotionalCodeBy(PromotionalCodeForm form) {
+		repository.findByCode(form.getCode()).ifPresent(entity -> {
+			throw new ResourceAlreadyExistsException("Promotional code already exists");
+		});
 
-        promotionalCode = repository.save(promotionalCode);
+		var promotionalCode = formMapper.map(form);
 
-        return promotionalCode.getCode();
-    }
+		promotionalCode = repository.save(promotionalCode);
+
+		return promotionalCode.getCode();
+	}
 }

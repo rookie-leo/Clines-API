@@ -1,17 +1,15 @@
 package br.com.caelum.clines.shared.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Getter
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "promotional_codes")
 public class PromotionalCode {
     @Id
@@ -40,4 +38,30 @@ public class PromotionalCode {
         this.description = description;
         this.discount = discount;
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public LocalDate getExpirationDate() {
+		return expirationDate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public Integer getDiscount() {
+		return discount;
+	}
+
+	
 }

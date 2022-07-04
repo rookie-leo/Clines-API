@@ -1,16 +1,12 @@
 package br.com.caelum.clines.shared.configurations;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.http.HttpMethod;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-@Getter
-@Setter
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.http.HttpMethod;
+
 @ConfigurationProperties(prefix = "cors.allowed")
 public class CorsConfigurationProperties {
     private static final List<String> PERMIT_ALL = List.of("*");
@@ -41,8 +37,50 @@ public class CorsConfigurationProperties {
     public String[] getMethods() {
         return buildMethodStream().map(HttpMethod::name).toArray(String[]::new);
     }
+    
+    
 
-    private Stream<HttpMethod> buildMethodStream() {
+    public boolean isSendCredentials() {
+		return sendCredentials;
+	}
+
+	public void setSendCredentials(boolean sendCredentials) {
+		this.sendCredentials = sendCredentials;
+	}
+
+	public boolean isAllMethods() {
+		return allMethods;
+	}
+
+	public void setAllMethods(boolean allMethods) {
+		this.allMethods = allMethods;
+	}
+
+	public boolean isAllHeaders() {
+		return allHeaders;
+	}
+
+	public void setAllHeaders(boolean allHeaders) {
+		this.allHeaders = allHeaders;
+	}
+
+	public static List<String> getPermitAll() {
+		return PERMIT_ALL;
+	}
+
+	public void setOrigins(List<String> origins) {
+		this.origins = origins;
+	}
+
+	public void setHeaders(List<String> headers) {
+		this.headers = headers;
+	}
+
+	public void setMethods(List<HttpMethod> methods) {
+		this.methods = methods;
+	}
+
+	private Stream<HttpMethod> buildMethodStream() {
         if (allMethods) {
             return Arrays.stream(HttpMethod.values());
         }

@@ -1,46 +1,48 @@
 package br.com.caelum.clines.api.locations;
 
-import lombok.AllArgsConstructor;
+import static org.springframework.http.ResponseEntity.created;
+
+import java.net.URI;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-
-import static org.springframework.http.ResponseEntity.created;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
-
 @RestController
 @RequestMapping("location")
-@AllArgsConstructor
 public class LocationController {
 
-    private final LocationService service;
+	private final LocationService service;
 
-    @PostMapping
-    public ResponseEntity<?> createBy(@RequestBody @Valid LocationForm form) {
-        Long code = service.createLocationBy(form);
+	@Autowired
+	public LocationController(LocationService service) {
+		this.service = service;
+	}
 
-        URI uri = URI.create("/location/")
-                .resolve(code.toString());
+	@PostMapping
+	public ResponseEntity<?> createBy(@RequestBody @Valid LocationForm form) {
+		Long code = service.createLocationBy(form);
 
-        return created(uri).build();
-    }
+		URI uri = URI.create("/location/").resolve(code.toString());
 
-    @GetMapping
-    public List<LocationView> list() {
-        return service.listAllLocations();
-    }
+		return created(uri).build();
+	}
 
-    @GetMapping("{id}")
-    public LocationView show(@PathVariable("id") long id) {
-        return service.showLocationBy(id);
-    }
+	@GetMapping
+	public List<LocationView> list() {
+		return service.listAllLocations();
+	}
+
+	@GetMapping("{id}")
+	public LocationView show(@PathVariable("id") long id) {
+		return service.showLocationBy(id);
+	}
 }

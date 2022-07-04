@@ -1,58 +1,60 @@
 package br.com.caelum.clines.shared.infra;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 public class ErrorView {
-    private List<ErrorMessage> errors = new ArrayList<>();
+	private List<ErrorMessage> errors = new ArrayList<>();
 
-    public void addGenericError(String message) {
-        errors.add(new ErrorMessage(message));
-    }
+	public void addGenericError(String message) {
+		errors.add(new ErrorMessage(message));
+	}
 
-    public void addFieldError(String field, String message) {
-        errors.add(new FieldErrorMessage(field, message));
-    }
+	public void addFieldError(String field, String message) {
+		errors.add(new FieldErrorMessage(field, message));
+	}
 
-    @Override
-    public String toString() {
-        return "ErrorView{" +
-                "errors=" + errors +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "ErrorView{" + "errors=" + errors + '}';
+	}
 
-    @AllArgsConstructor
-    @Getter
-    static class ErrorMessage {
-        private String message;
+	public List<ErrorMessage> getErrors() {
+		return errors;
+	}
 
-        @Override
-        public String toString() {
-            return "ErrorMessage{" +
-                    "message='" + message + '\'' +
-                    '}';
-        }
-    }
+	static class ErrorMessage {
+		private String message;
 
-    @Getter
-    static class FieldErrorMessage extends ErrorMessage {
-        private String field;
+		public ErrorMessage(String message) {
+			this.message = message;
+		}
 
-        FieldErrorMessage(String field, String message) {
-            super(message);
-            this.field = field;
-        }
+		public String getMessage() {
+			return message;
+		}
 
-        @Override
-        public String toString() {
-            return "FieldErrorMessage{" +
-                    "field='" + field + '\'' +
-                    ", message='" + getMessage() + '\'' +
-                    '}';
-        }
-    }
+		@Override
+		public String toString() {
+			return "ErrorMessage{" + "message='" + message + '\'' + '}';
+		}
+	}
+
+	static class FieldErrorMessage extends ErrorMessage {
+		private String field;
+
+		FieldErrorMessage(String field, String message) {
+			super(message);
+			this.field = field;
+		}
+
+		public String getField() {
+			return field;
+		}
+
+		@Override
+		public String toString() {
+			return "FieldErrorMessage{" + "field='" + field + '\'' + ", message='" + getMessage() + '\'' + '}';
+		}
+	}
 }

@@ -1,8 +1,6 @@
 package br.com.caelum.clines.shared.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,12 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
-@Getter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "locations")
 public class Location {
     @Id
@@ -52,5 +46,21 @@ public class Location {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public Country getCountry() {
+		return country;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public String getCity() {
+		return city;
+	}
 
 }

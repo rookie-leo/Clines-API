@@ -1,18 +1,18 @@
 package br.com.caelum.clines.api.airports;
 
-import br.com.caelum.clines.shared.exceptions.LocationNotFoundException;
-import br.com.caelum.clines.shared.exceptions.ResourceAlreadyExistsException;
-import br.com.caelum.clines.shared.exceptions.ResourceNotFoundException;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
 import static br.com.caelum.clines.shared.util.StringNormalizer.normalize;
 import static java.util.stream.Collectors.toList;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.com.caelum.clines.shared.exceptions.LocationNotFoundException;
+import br.com.caelum.clines.shared.exceptions.ResourceAlreadyExistsException;
+import br.com.caelum.clines.shared.exceptions.ResourceNotFoundException;
+
 @Service
-@AllArgsConstructor
 public class AirportService {
 
     private final AirportRepository repository;
@@ -20,7 +20,17 @@ public class AirportService {
     private final AirportFormMapper formMapper;
     private final ExistingLocationService locationService;
 
-    public List<AirportView> listAllAirports() {
+    @Autowired
+    public AirportService(AirportRepository repository, AirportViewMapper viewMapper, AirportFormMapper formMapper,
+			ExistingLocationService locationService) {
+		this.repository = repository;
+		this.viewMapper = viewMapper;
+		this.formMapper = formMapper;
+		this.locationService = locationService;
+	}
+
+
+	public List<AirportView> listAllAirports() {
         return repository.findAll().stream().map(viewMapper::map).collect(toList());
     }
 

@@ -1,26 +1,32 @@
 package br.com.caelum.clines.api.flights;
 
-import br.com.caelum.clines.api.aircraft.AircraftViewMapper;
-import br.com.caelum.clines.shared.domain.Flight;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.caelum.clines.api.aircraft.AircraftViewMapper;
+import br.com.caelum.clines.shared.domain.Flight;
+
 @Component
-@AllArgsConstructor
 public class FlightViewFactory {
 
-    private final WaypointViewMapper waypointViewMapper;
-    private final AircraftViewMapper aircraftViewMapper;
+	private final WaypointViewMapper waypointViewMapper;
+	private final AircraftViewMapper aircraftViewMapper;
 
-    FlightView factory(Flight flight) {
-        var departure = flight.getDeparture();
-        var arrival = flight.getArrival();
-        var aircraft = flight.getAircraft();
+	@Autowired
+	public FlightViewFactory(WaypointViewMapper waypointViewMapper, AircraftViewMapper aircraftViewMapper) {
+		this.waypointViewMapper = waypointViewMapper;
+		this.aircraftViewMapper = aircraftViewMapper;
+	}
 
-        var departureView = waypointViewMapper.map(departure);
-        var arrivalView = waypointViewMapper.map(arrival);
-        var aircraftView = aircraftViewMapper.map(aircraft);
+	FlightView factory(Flight flight) {
+		var departure = flight.getDeparture();
+		var arrival = flight.getArrival();
+		var aircraft = flight.getAircraft();
 
-        return new FlightView(flight.getId(), flight.getPrice(), departureView, arrivalView, aircraftView);
-    }
+		var departureView = waypointViewMapper.map(departure);
+		var arrivalView = waypointViewMapper.map(arrival);
+		var aircraftView = aircraftViewMapper.map(aircraft);
+
+		return new FlightView(flight.getId(), flight.getPrice(), departureView, arrivalView, aircraftView);
+	}
 }

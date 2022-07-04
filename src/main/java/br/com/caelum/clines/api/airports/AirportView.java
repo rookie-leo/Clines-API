@@ -1,11 +1,20 @@
 package br.com.caelum.clines.api.airports;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor
 public class AirportView {
-    private String code;
-    private AircraftLocationView location;
+	private String code;
+	private AircraftLocationView location;
+
+	public AirportView(String code, AircraftLocationView location) {
+		this.code = code;
+		this.location = location;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public AircraftLocationView getLocation() {
+		return location;
+	}
+
 }

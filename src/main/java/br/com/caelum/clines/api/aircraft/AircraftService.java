@@ -1,17 +1,16 @@
 package br.com.caelum.clines.api.aircraft;
 
-import br.com.caelum.clines.shared.exceptions.AircraftModelNotFoundException;
-import br.com.caelum.clines.shared.exceptions.ResourceAlreadyExistsException;
-import br.com.caelum.clines.shared.exceptions.ResourceNotFoundException;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
+import org.springframework.stereotype.Service;
+
+import br.com.caelum.clines.shared.exceptions.AircraftModelNotFoundException;
+import br.com.caelum.clines.shared.exceptions.ResourceAlreadyExistsException;
+import br.com.caelum.clines.shared.exceptions.ResourceNotFoundException;
 
 @Service
-@AllArgsConstructor
 public class AircraftService {
 
     private final AircraftRepository repository;
@@ -19,7 +18,15 @@ public class AircraftService {
     private final AircraftViewMapper viewMapper;
     private final AircraftFormMapper formMapper;
 
-    public AircraftView showAircraftBy(String code) {
+    public AircraftService(AircraftRepository repository, ExistingAircraftModelService modelService,
+			AircraftViewMapper viewMapper, AircraftFormMapper formMapper) {
+		this.repository = repository;
+		this.modelService = modelService;
+		this.viewMapper = viewMapper;
+		this.formMapper = formMapper;
+	}
+
+	public AircraftView showAircraftBy(String code) {
 
         var aircraft = repository.findByCode(code).orElseThrow(() -> new ResourceNotFoundException("Cannot find aircraft"));
 

@@ -1,45 +1,50 @@
 package br.com.caelum.clines.api.flights;
 
-import br.com.caelum.clines.api.locations.LocationView;
-import br.com.caelum.clines.shared.exceptions.ResourceNotFoundException;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import static java.util.stream.Collectors.toList;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.com.caelum.clines.api.locations.LocationView;
+import br.com.caelum.clines.shared.exceptions.ResourceNotFoundException;
 
 @Service
-@AllArgsConstructor
 public class FlightService {
 
+	private final FlightRepository repository;
+	private final FlightViewFactory viewFactory;
+	private final FlightFactory flightFactory;
 
-    private final FlightRepository repository;
-    private final FlightViewFactory viewFactory;
-    private final FlightFactory flightFactory;
+	@Autowired
+	public FlightService(FlightRepository repository, FlightViewFactory viewFactory, FlightFactory flightFactory) {
+		this.repository = repository;
+		this.viewFactory = viewFactory;
+		this.flightFactory = flightFactory;
+	}
 
-    public FlightView showFlightBy(Long id) {
-        return repository.findById(id).map(viewFactory::factory).orElseThrow(() -> new ResourceNotFoundException("Cannot find flight"));
-    }
+	public FlightView showFlightBy(Long id) {
+		return repository.findById(id).map(viewFactory::factory)
+				.orElseThrow(() -> new ResourceNotFoundException("Cannot find flight"));
+	}
 
-    public List<FlightView> listAllFlights() {
-        return repository.findAll().stream().map(viewFactory::factory).collect(toList());
-    }
+	public List<FlightView> listAllFlights() {
+		return repository.findAll().stream().map(viewFactory::factory).collect(toList());
+	}
 
-    public Long createNewFlightBy(FlightForm form) {
+	public Long createNewFlightBy(FlightForm form) {
 
-        var flight = flightFactory.factory(form);
+		var flight = flightFactory.factory(form);
 
-        repository.save(flight);
+		repository.save(flight);
 
-        return flight.getId();
-    }
+		return flight.getId();
+	}
 
-    public List<FlightView> searchBy(LocalDateTime date, LocationView location) {
-        return repository.findAllBy(date, location.getCountry(), location.getState(), location.getCity())
-                .stream()
-                .map(viewFactory::factory)
-                .collect(toList());
-    }
+	public List<FlightView> searchBy(LocalDateTime date, LocationView location) {
+		return repository.findAllBy(date, location.getCountry(), location.getState(), location.getCity()).stream()
+				.map(viewFactory::factory).collect(toList());
+	}
 }

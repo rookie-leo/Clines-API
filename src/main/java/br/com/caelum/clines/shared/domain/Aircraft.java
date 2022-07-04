@@ -1,9 +1,5 @@
 package br.com.caelum.clines.shared.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,9 +10,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "aircraft")
 public class Aircraft {
     @Id
@@ -35,4 +28,29 @@ public class Aircraft {
         this.code = code;
         this.model = model;
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public AircraftModel getModel() {
+		return model;
+	}
+
+	public void setModel(AircraftModel model) {
+		this.model = model;
+	}
+
 }

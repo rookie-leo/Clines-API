@@ -36,4 +36,16 @@ class AircraftForm {
 		return modelId;
 	}
 
+	public void setModel(AircraftModel model) {
+		this.model = model;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setModelId(Long modelId) {
+		this.modelId = modelId;
+	}
+
 }

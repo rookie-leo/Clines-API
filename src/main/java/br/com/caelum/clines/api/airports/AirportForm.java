@@ -1,20 +1,16 @@
 package br.com.caelum.clines.api.airports;
 
-import br.com.caelum.clines.shared.domain.Location;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-@Getter
-@NoArgsConstructor
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.caelum.clines.shared.domain.Location;
+
+
 public class AirportForm {
     @JsonIgnore
-    @Setter
     private Location location;
 
     @NotBlank
@@ -28,4 +24,29 @@ public class AirportForm {
         this.code = code;
         this.locationId = locationId;
     }
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public Long getLocationId() {
+		return locationId;
+	}
+
+	public void setLocationId(Long locationId) {
+		this.locationId = locationId;
+	}
+    
 }
